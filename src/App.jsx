@@ -2,6 +2,9 @@ import React from 'react'
 import { useState, useRef } from 'react'
 import { toPng } from 'html-to-image'
 import './index.css'
+import catHappy from './assets/cat-happy.png'
+import catSad from './assets/cat-sad.png'
+
 
 const COMPARISON_TOKENS = ['bitcoin', 'ethereum', 'solana', 'fartcoin']
 
@@ -183,12 +186,9 @@ export default function App() {
               <img
                 src={
                   parseFloat(result[normalizedToken]) >= parseFloat(amountUSD)
-                    ? `${baseCatURL}cat-happy.png`
-                    : `${baseCatURL}cat-sad.png`
+                    ? catHappy
+                    : catSad
                 }
-                alt="Cat Mood"
-                className="w-full"
-                crossOrigin="anonymous"
               />
               </div>
             </div>
