@@ -170,7 +170,7 @@ export default function App() {
                   }`}
                 >
                   You’ve{' '}
-                  {parseFloat(result[yourToken]) >=
+                  {parseFloat(result[normalizedToken]) >=
                   parseFloat(amountUSD)
                     ? 'gained'
                     : 'lost'}{' '}
