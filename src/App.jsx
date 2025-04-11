@@ -21,6 +21,8 @@ export default function App() {
     gbpc: 'monerium-gbp-emoney',
   }
   const normalizedToken = tokenMap[yourToken?.toLowerCase()] || yourToken
+  const baseCatURL = 'https://raw.githubusercontent.com/unhappyben/crypto-reality-check/main/public/';
+
 
   const fetchHistoricalPrice = async (token, timestamp) => {
     const url = `https://coins.llama.fi/prices/historical/${timestamp}/coingecko:${token}`
@@ -178,17 +180,16 @@ export default function App() {
               </div>
 
               <div className="w-24 shrink-0">
-                <img
-                  crossOrigin="anonymous"
-                  src={
-                    parseFloat(result[normalizedToken]) >=
-                    parseFloat(amountUSD)
-                      ? '/cat-happy.png'
-                      : '/cat-sad.png'
-                  }
-                  alt="Cat Mood"
-                  className="w-full"
-                />
+              <img
+                src={
+                  parseFloat(result[normalizedToken]) >= parseFloat(amountUSD)
+                    ? `${baseCatURL}cat-happy.png`
+                    : `${baseCatURL}cat-sad.png`
+                }
+                alt="Cat Mood"
+                className="w-full"
+                crossOrigin="anonymous"
+              />
               </div>
             </div>
 
