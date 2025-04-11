@@ -147,7 +147,7 @@ export default function App() {
                   }`}
                 >
                   You now have ${result[normalizedToken]} of{' '}
-                  {normalizedToken.toUpperCase()} 👀
+                  {yourToken.toUpperCase()} 👀
                 </p>
 
                 <p
@@ -158,7 +158,7 @@ export default function App() {
                   }`}
                 >
                   You’ve{' '}
-                  {parseFloat(result[normalizedToken]) >=
+                  {parseFloat(result[yourToken]) >=
                   parseFloat(amountUSD)
                     ? 'gained'
                     : 'lost'}{' '}
