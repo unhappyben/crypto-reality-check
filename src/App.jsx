@@ -134,7 +134,7 @@ export default function App() {
                   You bought{' '}
                   <span className="font-bold text-white">${amountUSD}</span> of{' '}
                   <span className="uppercase text-green-400">
-                    {normalizedToken}
+                    {yourToken}
                   </span>{' '}
                   on <span className="text-white">{date}</span>
                 </p>
