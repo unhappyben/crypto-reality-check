@@ -37,8 +37,18 @@ export default function App() {
     }
 
     const timestamp = Math.floor(new Date(date).getTime() / 1000)
-    const allTokens = [yourToken, ...COMPARISON_TOKENS]
 
+
+    
+    const tokenMap = {
+      eur: 'euro-coin',
+      eurc: 'euro-coin',
+      gbp: 'monerium-gbp-emoney',
+      gbpc: 'monerium-gbp-emoney'
+    }
+    
+    const normalizedToken = tokenMap[yourToken.toLowerCase()] || yourToken
+    const allTokens = [normalizedToken, ...COMPARISON_TOKENS]
     const historicalPrices = {}
     for (const token of allTokens) {
       historicalPrices[token] = await fetchHistoricalPrice(token, timestamp)
@@ -118,13 +128,13 @@ export default function App() {
           <div className="text-red-400 text-sm mt-4">{error}</div>
         )}
 
-        {result && result[yourToken] && (
+        {result && result[normalizedToken] && (
           <div ref={resultRef} className="min-h-fit space-y-6 text-white/80 text-sm bg-zinc-800 p-10 rounded-xl shadow relative">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 space-y-2">
                 <p className="text-white text-base">
                   You bought <span className="font-bold text-white">${amountUSD}</span> of{' '}
-                  <span className="uppercase text-green-400">{yourToken}</span> on{' '}
+                  <span className="uppercase text-green-400">{normalizedToken}</span> on{' '}
                   <span className="text-white">{date}</span>
                 </p>
 
@@ -133,7 +143,7 @@ export default function App() {
                     ? 'text-green-400'
                     : 'text-red-400'
                 }`}>
-                  You now have ${result[yourToken]} of {yourToken.toUpperCase()} 👀
+                  You now have ${result[normalizedToken]} of {normalizedToken.toUpperCase()} 👀
                 </p>
 
 
@@ -142,9 +152,9 @@ export default function App() {
                     ? 'text-green-400'
                     : 'text-red-400'
                 }`}>
-                  You’ve {parseFloat(result[yourToken]) >= parseFloat(amountUSD) ? 'gained' : 'lost'} $
-                  {Math.abs(parseFloat(amountUSD) - parseFloat(result[yourToken])).toFixed(2)} since your investment
-                  {parseFloat(result[yourToken]) >= parseFloat(amountUSD) ? ' 💰' : ' 😢'}
+                  You’ve {parseFloat(result[normalizedToken]) >= parseFloat(amountUSD) ? 'gained' : 'lost'} $
+                  {Math.abs(parseFloat(amountUSD) - parseFloat(result[normalizedToken])).toFixed(2)} since your investment
+                  {parseFloat(result[normalizedToken]) >= parseFloat(amountUSD) ? ' 💰' : ' 😢'}
                 </p>
               </div>
 
