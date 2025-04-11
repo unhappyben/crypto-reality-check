@@ -5,8 +5,6 @@ import './index.css'
 
 const COMPARISON_TOKENS = ['bitcoin', 'ethereum', 'solana', 'fartcoin']
 
-
-
 export default function App() {
   const [date, setDate] = useState('')
   const [amountUSD, setAmountUSD] = useState(null)
@@ -17,13 +15,12 @@ export default function App() {
   const resultRef = useRef(null)
 
   const tokenMap = {
-  eur: 'euro-coin',
-  eurc: 'euro-coin',
-  gbp: 'monerium-gbp-emoney',
-  gbpc: 'monerium-gbp-emoney',
-}
-const normalizedToken = tokenMap[yourToken?.toLowerCase()] || yourToken
-
+    eur: 'euro-coin',
+    eurc: 'euro-coin',
+    gbp: 'monerium-gbp-emoney',
+    gbpc: 'monerium-gbp-emoney',
+  }
+  const normalizedToken = tokenMap[yourToken?.toLowerCase()] || yourToken
 
   const fetchHistoricalPrice = async (token, timestamp) => {
     const url = `https://coins.llama.fi/prices/historical/${timestamp}/coingecko:${token}`
@@ -79,7 +76,7 @@ const normalizedToken = tokenMap[yourToken?.toLowerCase()] || yourToken
 
   const handleDownload = () => {
     if (!resultRef.current) return
-    toPng(resultRef.current, { pixelRatio: 2 }).then((dataUrl) => {      
+    toPng(resultRef.current, { pixelRatio: 2 }).then((dataUrl) => {
       const link = document.createElement('a')
       link.download = `crypto-reality-check-${yourToken}.png`
       link.href = dataUrl
@@ -104,13 +101,13 @@ const normalizedToken = tokenMap[yourToken?.toLowerCase()] || yourToken
           <input
             type="number"
             placeholder="Amount in USD"
-            value={amountUSD}
+            value={amountUSD || ''}
             onChange={(e) => setAmountUSD(e.target.value)}
             className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded text-white"
           />
           <input
             type="text"
-            value={yourToken}
+            value={yourToken || ''}
             onChange={(e) => setYourToken(e.target.value.toLowerCase())}
             placeholder="Your token (e.g. pendle)"
             className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded text-white uppercase tracking-widest"
@@ -124,44 +121,64 @@ const normalizedToken = tokenMap[yourToken?.toLowerCase()] || yourToken
           </button>
         </div>
 
-        {error && (
-          <div className="text-red-400 text-sm mt-4">{error}</div>
-        )}
+        {error && <div className="text-red-400 text-sm mt-4">{error}</div>}
 
         {result && result[normalizedToken] && (
-          <div ref={resultRef} className="min-h-fit space-y-6 text-white/80 text-sm bg-zinc-800 p-10 rounded-xl shadow relative">
+          <div
+            ref={resultRef}
+            className="min-h-fit space-y-6 text-white/80 text-sm bg-zinc-800 p-10 rounded-xl shadow relative"
+          >
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 space-y-2">
                 <p className="text-white text-base">
-                  You bought <span className="font-bold text-white">${amountUSD}</span> of{' '}
-                  <span className="uppercase text-green-400">{normalizedToken}</span> on{' '}
-                  <span className="text-white">{date}</span>
+                  You bought{' '}
+                  <span className="font-bold text-white">${amountUSD}</span> of{' '}
+                  <span className="uppercase text-green-400">
+                    {normalizedToken}
+                  </span>{' '}
+                  on <span className="text-white">{date}</span>
                 </p>
 
-                <p className={`${
-                  parseFloat(result[yourToken]) >= parseFloat(amountUSD)
-                    ? 'text-green-400'
-                    : 'text-red-400'
-                }`}>
-                  You now have ${result[normalizedToken]} of {normalizedToken.toUpperCase()} 👀
+                <p
+                  className={`${
+                    parseFloat(result[normalizedToken]) >= parseFloat(amountUSD)
+                      ? 'text-green-400'
+                      : 'text-red-400'
+                  }`}
+                >
+                  You now have ${result[normalizedToken]} of{' '}
+                  {normalizedToken.toUpperCase()} 👀
                 </p>
 
-
-                <p className={`$ {
-                  parseFloat(result[yourToken]) >= parseFloat(amountUSD)
-                    ? 'text-green-400'
-                    : 'text-red-400'
-                }`}>
-                  You’ve {parseFloat(result[normalizedToken]) >= parseFloat(amountUSD) ? 'gained' : 'lost'} $
-                  {Math.abs(parseFloat(amountUSD) - parseFloat(result[normalizedToken])).toFixed(2)} since your investment
-                  {parseFloat(result[normalizedToken]) >= parseFloat(amountUSD) ? ' 💰' : ' 😢'}
+                <p
+                  className={`${
+                    parseFloat(result[normalizedToken]) >= parseFloat(amountUSD)
+                      ? 'text-green-400'
+                      : 'text-red-400'
+                  }`}
+                >
+                  You’ve{' '}
+                  {parseFloat(result[normalizedToken]) >=
+                  parseFloat(amountUSD)
+                    ? 'gained'
+                    : 'lost'}{' '}
+                  $
+                  {Math.abs(
+                    parseFloat(amountUSD) -
+                      parseFloat(result[normalizedToken])
+                  ).toFixed(2)}{' '}
+                  since your investment{' '}
+                  {parseFloat(result[normalizedToken]) >= parseFloat(amountUSD)
+                    ? '💰'
+                    : '😢'}
                 </p>
               </div>
 
               <div className="w-24 shrink-0">
                 <img
                   src={
-                    parseFloat(result[yourToken]) >= parseFloat(amountUSD)
+                    parseFloat(result[normalizedToken]) >=
+                    parseFloat(amountUSD)
                       ? '/cat-happy.png'
                       : '/cat-sad.png'
                   }
@@ -174,7 +191,7 @@ const normalizedToken = tokenMap[yourToken?.toLowerCase()] || yourToken
             <div className="pt-4 space-y-3 text-sm">
               {COMPARISON_TOKENS.map((t) => {
                 const altValue = parseFloat(result[t])
-                const yourValue = parseFloat(result[yourToken])
+                const yourValue = parseFloat(result[normalizedToken])
                 const diff = altValue - yourValue
                 const isUp = diff > 0
 
@@ -187,8 +204,14 @@ const normalizedToken = tokenMap[yourToken?.toLowerCase()] || yourToken
                       If you bought <span className="font-semibold">{t}</span>
                     </span>
                     <span className="text-right">
-                      <div className="text-white font-mono">${altValue.toFixed(2)}</div>
-                      <div className={`text-xs ${isUp ? 'text-green-400' : 'text-red-400'}`}>
+                      <div className="text-white font-mono">
+                        ${altValue.toFixed(2)}
+                      </div>
+                      <div
+                        className={`text-xs ${
+                          isUp ? 'text-green-400' : 'text-red-400'
+                        }`}
+                      >
                         {isUp ? '↑' : '↓'} {Math.abs(diff).toFixed(2)}
                       </div>
                     </span>
@@ -209,9 +232,16 @@ const normalizedToken = tokenMap[yourToken?.toLowerCase()] || yourToken
             </button>
 
             <p className="mt-4 text-sm text-white/50 text-center">
-              Made by <a href="https://twitter.com/unhappyben" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">unhappyben</a>
+              Made by{' '}
+              <a
+                href="https://twitter.com/unhappyben"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white"
+              >
+                unhappyben
+              </a>
             </p>
-
           </div>
         )}
       </div>
