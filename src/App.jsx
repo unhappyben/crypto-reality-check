@@ -5,6 +5,8 @@ import './index.css'
 
 const COMPARISON_TOKENS = ['bitcoin', 'ethereum', 'solana', 'fartcoin']
 
+
+
 export default function App() {
   const [date, setDate] = useState('')
   const [amountUSD, setAmountUSD] = useState(null)
@@ -13,6 +15,15 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const resultRef = useRef(null)
+
+  const tokenMap = {
+  eur: 'euro-coin',
+  eurc: 'euro-coin',
+  gbp: 'monerium-gbp-emoney',
+  gbpc: 'monerium-gbp-emoney',
+}
+const normalizedToken = tokenMap[yourToken?.toLowerCase()] || yourToken
+
 
   const fetchHistoricalPrice = async (token, timestamp) => {
     const url = `https://coins.llama.fi/prices/historical/${timestamp}/coingecko:${token}`
@@ -37,17 +48,6 @@ export default function App() {
     }
 
     const timestamp = Math.floor(new Date(date).getTime() / 1000)
-
-
-    
-    const tokenMap = {
-      eur: 'euro-coin',
-      eurc: 'euro-coin',
-      gbp: 'monerium-gbp-emoney',
-      gbpc: 'monerium-gbp-emoney'
-    }
-    
-    const normalizedToken = tokenMap[yourToken.toLowerCase()] || yourToken
     const allTokens = [normalizedToken, ...COMPARISON_TOKENS]
     const historicalPrices = {}
     for (const token of allTokens) {
