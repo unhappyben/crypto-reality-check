@@ -16,7 +16,11 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const resultRef = useRef(null)
+  const catHappy = "https://3fp61tzntj.ufs.sh/f/A3VV4KEsofp1OSVp9kXp3lRXeGZqhUj69oCaIAKJ5TcfzW74"
+  const catSad = "https://3fp61tzntj.ufs.sh/f/A3VV4KEsofp1UDghAAOCwI0vLyFVGbNxdJrucqn3tA7zoPDa"
 
+
+  
   const tokenMap = {
     eur: 'euro-coin',
     eurc: 'euro-coin',
@@ -24,7 +28,7 @@ export default function App() {
     gbpc: 'monerium-gbp-emoney',
   }
   const normalizedToken = tokenMap[yourToken?.toLowerCase()] || yourToken
-  const baseCatURL = 'https://raw.githubusercontent.com/unhappyben/crypto-reality-check/main/public/';
+  //const baseCatURL = 'https://raw.githubusercontent.com/unhappyben/crypto-reality-check/main/public/';
 
 
   const fetchHistoricalPrice = async (token, timestamp) => {
@@ -186,8 +190,8 @@ export default function App() {
               <img
                 src={
                   parseFloat(result[normalizedToken]) >= parseFloat(amountUSD)
-                    ? 'https://i.imgur.com/cJ2JHC5.png' // happy
-                    : 'https://i.imgur.com/hROKQ0K.png' // sad
+                    ? catHappy
+                    : catSad
                 }
                 alt="Cat Mood"
                 className="w-full"
