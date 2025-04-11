@@ -179,6 +179,7 @@ export default function App() {
 
               <div className="w-24 shrink-0">
                 <img
+                  crossOrigin="anonymous"
                   src={
                     parseFloat(result[normalizedToken]) >=
                     parseFloat(amountUSD)
