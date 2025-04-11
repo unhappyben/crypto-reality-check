@@ -197,6 +197,11 @@ export default function App() {
             >
               Download Card
             </button>
+
+            <p className="mt-4 text-sm text-white/50 text-center">
+              Made by <a href="https://twitter.com/unhappyben" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">unhappyben</a>
+            </p>
+
           </div>
         )}
       </div>
