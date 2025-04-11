@@ -112,6 +112,9 @@ export default function App() {
             placeholder="Your token (e.g. pendle)"
             className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded text-white uppercase tracking-widest"
           />
+          <p className="text-xs text-zinc-400 italic">
+            Please use full token name (e.g., <strong>ethereum</strong> not <strong>ETH</strong>)
+          </p>
           <button
             onClick={fetchRealityCheck}
             className="w-full bg-white text-black font-semibold py-3 rounded hover:bg-zinc-200 transition"
