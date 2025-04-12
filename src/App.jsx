@@ -123,6 +123,9 @@ export default function App() {
             type="text"
             value={yourToken || ''}
             onChange={(e) => setYourToken(e.target.value.toLowerCase())}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') fetchRealityCheck()
+            }}
             placeholder="Your token (e.g. pendle)"
             className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded text-white uppercase tracking-widest"
           />
