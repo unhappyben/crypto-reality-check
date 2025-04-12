@@ -26,6 +26,11 @@ export default function App() {
     eurc: 'euro-coin',
     gbp: 'monerium-gbp-emoney',
     gbpc: 'monerium-gbp-emoney',
+    trump: 'official-trump',
+    melania: 'melania-meme',
+    cad: 'cad-coin',
+    chf: 'frankencoin'
+    
   }
   const normalizedToken = tokenMap[yourToken?.toLowerCase()] || yourToken
   //const baseCatURL = 'https://raw.githubusercontent.com/unhappyben/crypto-reality-check/main/public/';
